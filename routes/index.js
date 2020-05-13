@@ -19,7 +19,7 @@ router.get("/", function (req, res) {
 
 router.get("/errors", function (req, res) {
   db.query("SELECT * FROM errors LIMIT 50").then(function (data) {
-    res.send({ errors: data });
+    res.send({ errors: data.rows });
   });
 });
 
