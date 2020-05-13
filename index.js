@@ -3,7 +3,7 @@ var cors = require("cors");
 var app = express();
 var router = require("./routes/index.js");
 
-var PORT = process.env.NODE_ENV === "development" ? 3030 : 443;
+var PORT = 3030;
 
 app.use(cors());
 app.use(router);
