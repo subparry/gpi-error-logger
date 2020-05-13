@@ -14,12 +14,11 @@ function routeLogger(req, res, next) {
 router.use(routeLogger);
 
 router.get("/", function (req, res) {
-  console.log("hello!");
-  res.end();
+  res.send("Root route. Visit /errors to get all current errors");
 });
 
 router.get("/errors", function (req, res) {
-  db.any("SELECT * FROM errors LIMIT 10").then(function (data) {
+  db.any("SELECT * FROM errors LIMIT 50").then(function (data) {
     res.send({ errors: data });
   });
 });
