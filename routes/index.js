@@ -25,8 +25,13 @@ router.get("/errors", function (req, res) {
 
 router.post("/errors", jsonParser, function (req, res) {
   db.query(
-    "INSERT INTO errors(type, message, created_at, url) VALUES ($1, $2, $3, $4)",
-    [req.body.type, req.body.message, new Date(), req.body.url]
+    "INSERT INTO errors(type, message, created_at, url) VALUES($1, $2, $3, $4)",
+    [
+      req.body.type || "N/A",
+      req.body.message || "N/A",
+      new Date(),
+      req.body.url || "N/A",
+    ]
   )
     .then(function () {
       res.status(201).send({ message: "ok" });
