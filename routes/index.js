@@ -24,20 +24,24 @@ router.get("/errors", function (req, res) {
 });
 
 router.post("/errors", jsonParser, function (req, res) {
-  db.query(
-    "INSERT INTO errors(type, message, created_at, url) VALUES($1, $2, $3, $4)",
-    [
+  const query = {
+    text:
+      "INSERT INTO errors(type, message, created_at, url) VALUES($1, $2, $3, $4)",
+    values: [
       req.body.type || "N/A",
       req.body.message || "N/A",
       new Date(),
       req.body.url || "N/A",
-    ]
-  )
+    ],
+  };
+  db.query(query)
     .then(function () {
       res.status(201).send({ message: "ok" });
     })
     .catch(function (err) {
-      res.status(500).send("Error: " + err.message);
+      res
+        .status(500)
+        .send("Error: " + err.message + ". values: " + query.values);
     });
 });
 
