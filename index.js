@@ -5,9 +5,14 @@ var router = require("./routes/index.js");
 
 var PORT = process.env.PORT || 3030;
 
+var allowedCORSOrigins =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : ["http://aeq.me", "https://www.goplaceit.com"];
+
 app.use(
   cors({
-    origin: ["http://aeq.me", "https://www.goplaceit.com"],
+    origin: allowedCORSOrigins,
     methods: ["POST", "GET"],
   })
 );
