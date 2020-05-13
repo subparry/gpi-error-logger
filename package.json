@@ -1,0 +1,29 @@
+{
+  "name": "gpi-error-logger",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "db-migrate": "^0.11.11",
+    "db-migrate-pg": "^1.2.2",
+    "express": "^4.17.1",
+    "express-react-views": "^0.11.0",
+    "pg-promise": "^10.5.1",
+    "react": "^16.13.1",
+    "react-data-table-component": "^6.9.1",
+    "react-dom": "^16.13.1",
+    "styled-components": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
+}

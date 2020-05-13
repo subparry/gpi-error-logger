@@ -1,0 +1,11 @@
+{
+  "dev": {
+    "driver": "pg",
+    "user": "gpilogger",
+    "password": "GPILogger",
+    "host": "localhost",
+    "database": "gpiloggerdb",
+    "port": "5432",
+    "schema": "public"
+  }
+}
