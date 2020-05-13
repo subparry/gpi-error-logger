@@ -10,4 +10,5 @@ app.use(router);
 
 app.listen(PORT, function () {
   console.log("Server started in port " + PORT);
+  console.log("database url = ", process.env.DATABASE_URL);
 });
