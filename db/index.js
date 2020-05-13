@@ -1,17 +1,21 @@
-var pgp = require("pg-promise")();
+var pg = require("pg");
+var Pool = pg.Pool;
 
 var connectionConf =
   process.env.NODE_ENV === "development"
     ? {
-        host: "localhost",
-        port: 5432,
-        database: "gpiloggerdb",
         user: "gpilogger",
+        host: "localhost",
+        database: "gpiloggerdb",
         password: "GPILogger",
-        max: 30,
+        port: 5432,
       }
-    : process.env.DATABASE_URL;
+    : { connectionString: process.env.DATABASE_URL };
 
-var db = pgp(connectionConf);
+var pool = new Pool(connectionConf);
 
-module.exports = db;
+module.exports = {
+  query: function (sql) {
+    return pool.query(sql);
+  },
+};

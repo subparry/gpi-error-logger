@@ -2,7 +2,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 
 var router = express.Router();
-var db = require("../db/index.js");
+var db = require("../db");
 var jsonParser = bodyParser.json();
 
 function routeLogger(req, res, next) {
@@ -18,17 +18,22 @@ router.get("/", function (req, res) {
 });
 
 router.get("/errors", function (req, res) {
-  db.any("SELECT * FROM errors LIMIT 50").then(function (data) {
+  db.query("SELECT * FROM errors LIMIT 50").then(function (data) {
     res.send({ errors: data });
   });
 });
 
 router.post("/errors", jsonParser, function (req, res) {
-  db.none(
+  db.query(
     "INSERT INTO errors(type, message, created_at, url) VALUES ($1, $2, $3, $4)",
     [req.body.type, req.body.message, new Date(), req.body.url]
-  );
-  res.status(201).send({ message: "ok" });
+  )
+    .then(function () {
+      res.status(201).send({ message: "ok" });
+    })
+    .catch(function (err) {
+      res.status(500).send("Error: " + err.message);
+    });
 });
 
 module.exports = router;
