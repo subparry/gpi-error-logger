@@ -7,13 +7,13 @@ var PORT = process.env.PORT || 3030;
 
 var allowedCORSOrigins =
   process.env.NODE_ENV === "development"
-    ? "http://localhost:3000"
+    ? ["http://localhost:3000"]
     : ["http://aeq.me", "https://www.goplaceit.com"];
 
 app.use(
   cors({
     origin: allowedCORSOrigins,
-    methods: ["POST", "GET"],
+    methods: ["POST", "GET", "OPTIONS"],
   })
 );
 app.use(router);

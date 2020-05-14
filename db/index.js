@@ -18,4 +18,7 @@ module.exports = {
   query: function (sql) {
     return pool.query(sql);
   },
+  connect: function (cb) {
+    return pool.connect(cb);
+  },
 };
