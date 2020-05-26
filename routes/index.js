@@ -18,9 +18,11 @@ router.get("/", function (req, res) {
 });
 
 router.get("/errors", function (req, res) {
-  pool.query("SELECT * FROM errors LIMIT 50").then(function (data) {
-    res.send({ errors: data.rows });
-  });
+  pool
+    .query("SELECT * FROM errors ORDER BY id DESC LIMIT 50")
+    .then(function (data) {
+      res.send({ errors: data.rows });
+    });
 });
 
 router.post("/errors", jsonParser, function (req, res) {
