@@ -49,7 +49,7 @@ router.post("/errors", jsonParser, function (req, res) {
       } else {
         const query = {
           text:
-            "INSERT INTO errors(type, message, first_occurrence_at, last_occurrence_at, url, browser) VALUES($1, $2, $3, $4, $5, $6)",
+            "INSERT INTO errors(type, message, first_occurrence_at, last_occurrence_at, url, browser, ip) VALUES($1, $2, $3, $4, $5, $6, $7)",
           values: [
             req.body.type || "N/A",
             req.body.message || "N/A",
@@ -57,6 +57,7 @@ router.post("/errors", jsonParser, function (req, res) {
             new Date(),
             req.body.url || "N/A",
             req.body.browser || "N/A",
+            req.ip,
           ],
         };
         await client.query(query);
