@@ -25,6 +25,12 @@ router.get("/errors", function (req, res) {
     });
 });
 
+router.get("/errors/count", function (req, res) {
+  pool.query("SELECT COUNT(id) FROM errors;").then(function (data) {
+    res.send({ count: data.rows });
+  });
+});
+
 router.post("/errors", jsonParser, function (req, res) {
   (async function () {
     const client = await pool.connect();
