@@ -35,7 +35,10 @@ Creates new error log. Request shape:
   }
 ```
 
+## Notice:
+
+As heroku free plan is very restricted, the database will be erased after reaching 5000 errors :)
+
 ## TO DO:
 
 - Add sorting and pagination to `GET /errors`
-- Add logic to delete old log records
