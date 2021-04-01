@@ -13,6 +13,8 @@ function routeLogger(req, res, next) {
 
 router.use(routeLogger)
 
+let recordCount = 'not-init'
+
 router.get('/', function (req, res) {
   res.send('Root route. Visit /errors to get all current errors')
 })
@@ -35,6 +37,14 @@ router.post('/errors', jsonParser, function (req, res) {
   ;(async function () {
     const client = await pool.connect()
 
+    try {
+      if (recordCount === 'not-init') {
+        const data = await client.query('SELECT COUNT(id) FROM errors;')
+        recordCount = parseInt(data.rows[0].count)
+      }
+    } catch (error) {
+      console.log('COUNT ERROR:', error.message)
+    }
     try {
       await client.query('BEGIN')
       const result = await client.query(
@@ -63,12 +73,17 @@ router.post('/errors', jsonParser, function (req, res) {
         await client.query(query)
       }
       await client.query('COMMIT')
+      typeof recordCount !== 'string' && recordCount++
       res.status(201).send({ message: 'ok' })
     } catch (e) {
       await client.query('ROLLBACK')
       console.log('ERROR: ', e.message)
       res.status(500).send({ message: e.message })
     } finally {
+      if (typeof recordCount !== 'string' && recordCount > 5000) {
+        await client.query('DELETE FROM errors;')
+        recordCount = 'not-init'
+      }
       client.release()
     }
   })().catch((e) => console.error(e.stack))
